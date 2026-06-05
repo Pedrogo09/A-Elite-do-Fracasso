@@ -1,0 +1,10 @@
+node_modules
+dist
+.vscode
+.DS_Store
+.env
+*.db
+backend/__pycache__
+backend/app.db
+src-tauri/target
+**/*.pyc
