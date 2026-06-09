@@ -101,7 +101,7 @@ del "%TEMP%\node_win.zip" >nul 2>&1
 if not exist "!NODE_DIR!\node.exe" goto erro_node_extract
 
 set "PATH=!NODE_DIR!;!PATH!"
-powershell -NoProfile -Command "$old=[Environment]::GetEnvironmentVariable('PATH','User'); if ($old -notlike '*nodejs*') { [Environment]::SetEnvironmentVariable('PATH','%NODE_DIR%;'+$old,'User') }"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "& { $old=[Environment]::GetEnvironmentVariable('PATH','User'); if ($old -notlike '*nodejs*') { [Environment]::SetEnvironmentVariable('PATH','%NODE_DIR%;'+$old,'User') } }"
 goto node_ok
 
 :erro_node_dl
