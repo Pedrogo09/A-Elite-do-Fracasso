@@ -1,12 +1,24 @@
 import random
+import sys
+import os
 from datetime import date, datetime, time, timedelta
 from passlib.context import CryptContext
 from dotenv import load_dotenv
-from .database import engine, SessionLocal
-from .models import Base, User, Service, Appointment, RoleEnum, StatusEnum
 
-load_dotenv()
+# Load backend .env explicitly
+basedir = os.path.dirname(__file__)
+load_dotenv(os.path.join(basedir, ".env"))
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+# Flexible imports: support running as a module (python -m backend.seed)
+try:
+    # when executed as package module
+    from .database import engine, SessionLocal
+    from .models import Base, User, Service, Appointment, RoleEnum, StatusEnum
+except Exception:
+    # when executed as a script (python seed.py)
+    from database import engine, SessionLocal
+    from models import Base, User, Service, Appointment, RoleEnum, StatusEnum
 
 
 def get_password_hash(password: str) -> str:

@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\11PI12\Elite_fracasso\backend\.venv
+set VIRTUAL_ENV=C:\Users\11PI12\Documents\A-Elite-do-Fracasso\backend\.venv
 
 if not defined PROMPT set PROMPT=$P$G
 

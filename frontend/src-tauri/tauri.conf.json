@@ -1,24 +1,14 @@
 {
-  "package": {
-    "productName": "AgendaApp",
-    "version": "0.1.0"
-  },
+  "productName": "AgendaApp",
+  "version": "0.1.0",
+  "identifier": "com.agendaapp.desktop",
   "build": {
     "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run dev",
-    "devPath": "http://localhost:5173",
-    "distDir": "dist"
+    "devUrl": "http://localhost:5173",
+    "frontendDist": "../dist"
   },
-  "tauri": {
-    "bundle": {
-      "identifier": "com.agendaapp.desktop",
-      "icon": ["icons/32x32.png"]
-    },
-    "allowlist": {
-      "http": {
-        "all": true
-      }
-    },
+  "app": {
     "windows": [
       {
         "title": "AgendaApp",
@@ -27,5 +17,10 @@
         "resizable": true
       }
     ]
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": ["icons/32x32.png"]
   }
 }

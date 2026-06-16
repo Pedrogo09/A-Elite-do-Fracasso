@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, ReactNode } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  variant?: "primary" | "secondary" | "ghost";
+  variant?: "primary" | "secondary" | "ghost" | "danger" | "default";
 }
 
 export function Button({ children, variant = "primary", className = "", ...props }: ButtonProps) {
@@ -12,9 +12,12 @@ export function Button({ children, variant = "primary", className = "", ...props
     primary: "bg-brand text-white hover:bg-indigo-500",
     secondary: "bg-slate-800 text-slate-100 hover:bg-slate-700",
     ghost: "bg-transparent text-slate-100 hover:bg-slate-800",
+    danger: "bg-rose-600 text-white hover:bg-rose-500",
+    default: "bg-slate-700 text-slate-100 hover:bg-slate-600",
   };
+  const cls = `${base} ${variants[variant] ?? variants.default} ${className}`;
   return (
-    <button className={`${base} ${variants[variant]} ${className}`} {...props}>
+    <button className={cls} {...props}>
       {children}
     </button>
   );

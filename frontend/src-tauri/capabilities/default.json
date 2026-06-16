@@ -1,0 +1,9 @@
+{
+  "$schema": "../capabilities-schema.json",
+  "identifier": "default",
+  "description": "Default permissions for AgendaApp",
+  "windows": ["main"],
+  "permissions": [
+    "core:default"
+  ]
+}

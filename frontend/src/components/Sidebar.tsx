@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, Users, CalendarDays, Toolbox, BarChart4 } from "lucide-react";
+import { LayoutDashboard, Users, CalendarDays, Wrench, BarChart4 } from "lucide-react";
 
 const links = [
   { to: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/admin/users", label: "Utilizadores", icon: Users },
   { to: "/admin/appointments", label: "Marcações", icon: CalendarDays },
-  { to: "/admin/services", label: "Serviços", icon: Toolbox },
+  { to: "/admin/services", label: "Serviços", icon: Wrench },
   { to: "/admin/stats", label: "Estatísticas", icon: BarChart4 },
 ];
 

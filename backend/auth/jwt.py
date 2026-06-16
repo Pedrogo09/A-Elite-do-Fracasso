@@ -2,8 +2,11 @@ import os
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from dotenv import load_dotenv
+import os as _os
 
-load_dotenv()
+# Load backend .env explicitly
+basedir = _os.path.dirname(_os.path.dirname(__file__))
+load_dotenv(_os.path.join(basedir, ".env"))
 
 SECRET_KEY = os.getenv("SECRET_KEY", "secret")
 ALGORITHM = "HS256"

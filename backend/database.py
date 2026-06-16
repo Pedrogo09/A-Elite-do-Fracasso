@@ -3,9 +3,24 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 import os
 
-load_dotenv()
+# Load backend-specific .env (so env works when running from project root)
+basedir = os.path.dirname(__file__)
+load_dotenv(os.path.join(basedir, ".env"))
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./app.db")
+
+# If using a relative sqlite path, convert it to an absolute path under the backend folder
+if DATABASE_URL.startswith("sqlite:///"):
+    _path = DATABASE_URL.replace("sqlite:///", "", 1)
+    if _path.startswith("."):
+        # remove leading ./ or .\
+        _path = _path.lstrip("./\\")
+        _abs = os.path.abspath(os.path.join(basedir, _path))
+    else:
+        _abs = os.path.abspath(_path)
+    # ensure forward slashes for sqlite URL
+    _abs_url_path = _abs.replace("\\", "/")
+    DATABASE_URL = f"sqlite:///{_abs_url_path}"
 
 engine = create_engine(
     DATABASE_URL,

@@ -1,0 +1,8 @@
+[package]
+name = "agendaapp-tauri"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Match Tauri v2.x used by frontend packages
+tauri = { version = "2.11.0", features = [] }
