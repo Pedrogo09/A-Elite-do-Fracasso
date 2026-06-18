@@ -4,8 +4,11 @@ from jose import JWTError, jwt
 from dotenv import load_dotenv
 import os as _os
 
-# Load backend .env explicitly
-basedir = _os.path.dirname(_os.path.dirname(__file__))
+import sys
+if getattr(sys, 'frozen', False):
+    basedir = _os.path.dirname(sys.executable)
+else:
+    basedir = _os.path.dirname(_os.path.dirname(__file__))
 load_dotenv(_os.path.join(basedir, ".env"))
 
 SECRET_KEY = os.getenv("SECRET_KEY", "secret")

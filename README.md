@@ -1,87 +1,63 @@
-# AgendaApp
+# AgendaApp Desktop
 
-Sistema de agendamento desktop com Tauri + React + TypeScript + FastAPI.
+Uma aplicação Desktop profissional desenvolvida com **React**, **FastAPI**, e empacotada com **Tauri** e **PyInstaller**.
 
-## Visão geral
+## Características Principais
+* **Desktop Nativo**: Usa o WebView2 via Tauri, garantindo que corre sem necessidade de abrir o navegador.
+* **Autossuficiente**: O backend FastAPI é compilado e executado automaticamente como um processo filho (sidecar) pelo Tauri. O utilizador final não necessita de instalar Python, Node ou Rust.
+* **Segurança**: As chaves API não estão expostas no código, sendo carregadas via variáveis de ambiente seguras.
 
-- Frontend: React 18 + TypeScript + Vite + Tailwind CSS
-- Backend: Python 3.11+ + FastAPI + SQLAlchemy + SQLite
-- Autenticação: JWT (access + refresh tokens)
-- Estado global: Zustand
-- Gráficos: Recharts
-- Formulários: React Hook Form + Zod
-- HTTP: Axios com interceptors JWT
+---
 
-## Estrutura do projeto
+## 💻 Desenvolvimento
 
-- `backend/` — API Python FastAPI
-- `src/` — frontend React + TypeScript
-- `src-tauri/` — Tauri desktop config
+Para programar e contribuir para o projeto, siga estes passos:
 
-## Configuração
+### 1. Pré-requisitos
+* Node.js (v18+)
+* Python (3.10+)
+* Rust e Cargo
+* Tauri CLI
 
-1. Copie os ficheiros de ambiente:
-   - `backend/.env.example` → `backend/.env`
-   - `/.env.example` → `/.env`
+### 2. Configuração Inicial
+Copie os ficheiros `.env.example` para as suas pastas correspondentes:
+- `backend/.env`
+- `frontend/.env`
 
-2. Instale dependências Python (no `backend/`):
+*(Assegure-se de que nunca comita os ficheiros `.env` para o Git, eles já estão ignorados no `.gitignore`)*
 
-```powershell
-cd backend
-python -m pip install -r requirements.txt
+### 3. Iniciar Ambiente de Desenvolvimento
+Basta executar o script de dev na raiz do projeto:
+```bat
+dev.bat
+```
+Este script irá instalar as dependências necessárias, ativar o ambiente virtual (venv), rodar o servidor FastAPI, e iniciar o Tauri Dev, abrindo a janela da aplicação.
+
+---
+
+## 📦 Compilação (Build Final)
+
+Quando o projeto estiver pronto para ser distribuído aos utilizadores, basta executar o comando de build automático:
+
+```bat
+build.bat
 ```
 
-3. Instale dependências Node (na raiz do projeto):
+**O que o build.bat faz:**
+1. Instala o PyInstaller.
+2. Compila todo o código Python (FastAPI) num único executável (`backend-api.exe`).
+3. Copia o executável compilado para a pasta `src-tauri/bin/` como um sidecar.
+4. Usa o `tauri build` para compilar o Frontend (React/Vite) e criar os instaladores finais da aplicação.
 
-```powershell
-npm install
-```
+---
 
-## Como arrancar
+## 🚀 Distribuição
 
-### Backend
+Após correr o `build.bat`, os ficheiros gerados estarão na pasta:
+`frontend\src-tauri\target\release\bundle`
 
-```powershell
-cd backend
-python -m uvicorn main:app --reload
-```
+Pode distribuir:
+* O instalador **.msi** ou **.exe** para instalação fácil (recomendado para Windows 10/11).
+* Os ficheiros avulsos na pasta `Release` se preferir criar um formato `.zip` portátil.
 
-### Frontend
-
-```powershell
-npm run dev
-```
-
-### Tauri (desktop)
-
-```powershell
-npm run tauri
-```
-
-## Seed de dados
-
-No `backend/`:
-
-```powershell
-python seed.py
-```
-
-### Usuários seed
-
-- admin@app.com / admin123
-- 5 clientes de teste
-
-## Endpoints principais
-
-- `POST /auth/login`
-- `POST /auth/register`
-- `POST /auth/refresh`
-- `GET /services`
-- `GET /appointments/my`
-- `GET /stats/overview`
-
-## Notas
-
-- O frontend usa `VITE_API_URL` para apontar ao backend.
-- O backend aceita CORS do Tauri e do `localhost`.
-- JWT e refresh tokens são geridos no estado global do frontend.
+O utilizador final **não necessitará de instalar nada** para a aplicação funcionar perfeitamente!

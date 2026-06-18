@@ -3,8 +3,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 import os
 
-# Load backend-specific .env (so env works when running from project root)
-basedir = os.path.dirname(__file__)
+import sys
+if getattr(sys, 'frozen', False):
+    basedir = os.path.dirname(sys.executable)
+else:
+    basedir = os.path.dirname(__file__)
 load_dotenv(os.path.join(basedir, ".env"))
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./app.db")

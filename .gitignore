@@ -1,5 +1,6 @@
 node_modules
 dist
+build
 .vscode
 .DS_Store
 .env
@@ -8,3 +9,7 @@ backend/__pycache__
 backend/app.db
 src-tauri/target
 **/*.pyc
+.venv
+logs
+temp
+cache

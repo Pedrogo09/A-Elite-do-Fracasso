@@ -4,8 +4,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import os as _os
 
-# Load backend .env explicitly (works when running from project root)
-basedir = _os.path.dirname(__file__)
+import sys
+if getattr(sys, 'frozen', False):
+    basedir = _os.path.dirname(sys.executable)
+else:
+    basedir = _os.path.dirname(__file__)
 load_dotenv(_os.path.join(basedir, ".env"))
 
 # Flexible imports so app can be run as module or as script
