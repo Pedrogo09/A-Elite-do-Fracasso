@@ -36,11 +36,11 @@ class TokenRefreshRequest(BaseModel):
 
 
 class UserUpdate(BaseModel):
-    name: Optional[str]
-    email: Optional[EmailStr]
-    phone: Optional[str]
-    is_active: Optional[bool]
-    role: Optional[RoleEnum]
+    name: Optional[str] = None
+    email: Optional[EmailStr] = None
+    phone: Optional[str] = None
+    is_active: Optional[bool] = None
+    role: Optional[RoleEnum] = None
 
 
 class UserOut(UserBase):
@@ -50,7 +50,7 @@ class UserOut(UserBase):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Token(BaseModel):
@@ -79,18 +79,18 @@ class ServiceCreate(ServiceBase):
 
 
 class ServiceUpdate(BaseModel):
-    name: Optional[str]
-    description: Optional[str]
-    duration_minutes: Optional[int]
-    price: Optional[float]
-    is_active: Optional[bool]
+    name: Optional[str] = None
+    description: Optional[str] = None
+    duration_minutes: Optional[int] = None
+    price: Optional[float] = None
+    is_active: Optional[bool] = None
 
 
 class ServiceOut(ServiceBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class AppointmentBase(BaseModel):
@@ -115,11 +115,11 @@ class AppointmentOut(BaseModel):
     date: date
     time: time
     status: StatusEnum
-    notes: Optional[str]
+    notes: Optional[str] = None
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class StatsOverview(BaseModel):

@@ -1,33 +1,36 @@
 import os
+import sys
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
-import os as _os
 
-import sys
+# Determinar o diretório base (funciona tanto em desenvolvimento como compilado com PyInstaller)
 if getattr(sys, 'frozen', False):
-    basedir = _os.path.dirname(sys.executable)
+    basedir = os.path.dirname(sys.executable)
 else:
-    basedir = _os.path.dirname(__file__)
-load_dotenv(_os.path.join(basedir, ".env"))
+    basedir = os.path.dirname(__file__)
 
-# Flexible imports so app can be run as module or as script
-try:
-    from .database import engine
-    from . import models
-    from .routers import auth, users, services, appointments, stats
-    models.Base.metadata.create_all(bind=engine)
-except Exception:
-    # fallback when executed as script: python backend/main.py
-    import database as _database
-    engine = _database.engine
+load_dotenv(os.path.join(basedir, ".env"))
+
+# Importações absolutas — o uvicorn é sempre lançado da raiz com backend.main:app
+# Para PyInstaller (executável standalone), usamos sys.path para garantir que encontra os módulos
+if getattr(sys, 'frozen', False):
+    # Executável compilado: adicionar o diretório do executável ao sys.path
+    if basedir not in sys.path:
+        sys.path.insert(0, basedir)
+    import database
     import models
     from routers import auth, users, services, appointments, stats
-    models.Base.metadata.create_all(bind=engine)
+else:
+    # Desenvolvimento: importações relativas ao pacote backend
+    from . import database, models
+    from .routers import auth, users, services, appointments, stats
+
+models.Base.metadata.create_all(bind=database.engine)
 
 app = FastAPI(title="AgendaApp API")
 
-origins = [origin.strip() for origin in os.getenv("CORS_ORIGINS", "").split(",") if origin.strip()]
+origins = [o.strip() for o in os.getenv("CORS_ORIGINS", "").split(",") if o.strip()]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins or ["*"],
