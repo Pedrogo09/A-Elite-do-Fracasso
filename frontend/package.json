@@ -15,6 +15,7 @@
     "@hookform/resolvers": "^3.4.1",
     "@tauri-apps/api": "^2.7.0",
     "axios": "^1.5.0",
+    "framer-motion": "^12.41.0",
     "lucide-react": "^0.493.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -22,13 +23,13 @@
     "react-router-dom": "^6.18.0",
     "recharts": "^2.8.0",
     "sonner": "^1.0.0",
-    "zustand": "^4.5.0",
-    "zod": "^3.24.2"
+    "zod": "^3.24.2",
+    "zustand": "^4.5.0"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "^2.7.0",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
-    "@tauri-apps/cli": "^2.7.0",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.40",

@@ -17,7 +17,7 @@ export async function login(payload: LoginPayload) {
   return response.data;
 }
 
-export async function register(payload: { name: string; email: string; password: string; phone?: string }) {
+export async function register(payload: { name: string; email: string; password: string }) {
   const response = await client.post("/auth/register", payload);
   return response.data;
 }

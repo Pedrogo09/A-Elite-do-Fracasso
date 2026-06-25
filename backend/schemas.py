@@ -19,7 +19,6 @@ class StatusEnum(str, Enum):
 class UserBase(BaseModel):
     name: str = Field(..., min_length=2, max_length=120)
     email: EmailStr
-    phone: Optional[str] = None
 
 
 class UserCreate(UserBase):
@@ -38,7 +37,6 @@ class TokenRefreshRequest(BaseModel):
 class UserUpdate(BaseModel):
     name: Optional[str] = None
     email: Optional[EmailStr] = None
-    phone: Optional[str] = None
     is_active: Optional[bool] = None
     role: Optional[RoleEnum] = None
 

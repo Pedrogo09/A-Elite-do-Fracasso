@@ -28,7 +28,6 @@ class User(Base):
     email = Column(String(200), unique=True, index=True, nullable=False)
     hashed_password = Column(String(256), nullable=False)
     role = Column(Enum(RoleEnum), default=RoleEnum.client, nullable=False)
-    phone = Column(String(30), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     is_active = Column(Boolean, default=True, nullable=False)
 

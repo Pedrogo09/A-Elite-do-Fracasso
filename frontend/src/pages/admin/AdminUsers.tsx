@@ -16,7 +16,7 @@ export default function AdminUsers() {
   const [role, setRole] = useState<typeof roleOptions[number]>("all");
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", password: "", phone: "" });
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
 
   const queryParams = useMemo(() => {
     return {
@@ -62,10 +62,9 @@ export default function AdminUsers() {
         name: form.name,
         email: form.email,
         password: form.password,
-        phone: form.phone || undefined,
       });
       toast.success("Utilizador criado com sucesso");
-      setForm({ name: "", email: "", password: "", phone: "" });
+      setForm({ name: "", email: "", password: "" });
       listUsers(queryParams).then(setUsers);
     } catch {
       toast.error("Erro ao criar utilizador.");
@@ -91,12 +90,6 @@ export default function AdminUsers() {
               type="email"
               value={form.email}
               onChange={(event) => setForm((prev) => ({ ...prev, email: event.target.value }))}
-            />
-            <Input
-              label="Telefone"
-              type="tel"
-              value={form.phone}
-              onChange={(event) => setForm((prev) => ({ ...prev, phone: event.target.value }))}
             />
             <Input
               label="Password"
@@ -134,7 +127,6 @@ export default function AdminUsers() {
               <tr>
                 <th className="px-4 py-4 text-left">Nome</th>
                 <th className="px-4 py-4 text-left">Email</th>
-                <th className="px-4 py-4 text-left">Telefone</th>
                 <th className="px-4 py-4 text-left">Role</th>
                 <th className="px-4 py-4 text-left">Estado</th>
                 <th className="px-4 py-4 text-left">Registo</th>
@@ -143,13 +135,12 @@ export default function AdminUsers() {
             </thead>
             <tbody className="divide-y divide-slate-800 bg-slate-950">
               {loading ? (
-                <tr><td colSpan={7} className="py-10 text-center"><Spinner /></td></tr>
+                <tr><td colSpan={6} className="py-10 text-center"><Spinner /></td></tr>
               ) : users.length ? (
                 users.map((user) => (
                   <tr key={user.id}>
                     <td className="px-4 py-4">{user.name}</td>
                     <td className="px-4 py-4">{user.email}</td>
-                    <td className="px-4 py-4">{user.phone ?? "-"}</td>
                     <td className="px-4 py-4"><Badge variant={user.role === "admin" ? "info" : "default"}>{user.role}</Badge></td>
                     <td className="px-4 py-4"><Badge variant={user.is_active ? "success" : "danger"}>{user.is_active ? "Ativo" : "Inativo"}</Badge></td>
                     <td className="px-4 py-4">{new Date(user.created_at).toLocaleDateString()}</td>

@@ -2,13 +2,12 @@ import random
 import sys
 import os
 from datetime import date, datetime, time, timedelta
-from passlib.context import CryptContext
+import bcrypt
 from dotenv import load_dotenv
 
 # Load backend .env explicitly
 basedir = os.path.dirname(__file__)
 load_dotenv(os.path.join(basedir, ".env"))
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # Flexible imports: support running as a module (python -m backend.seed)
 try:
@@ -22,7 +21,8 @@ except Exception:
 
 
 def get_password_hash(password: str) -> str:
-    return pwd_context.hash(password)
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8')
 
 
 def create_data():
@@ -36,19 +36,18 @@ def create_data():
                 email="admin@app.com",
                 hashed_password=get_password_hash("admin123"),
                 role=RoleEnum.admin,
-                phone="+351912345678",
             )
             db.add(admin)
 
         clients = []
         client_data = [
-            ("Miguel Costa", "miguel@app.com", "+351911111111"),
-            ("Ana Silva", "ana@app.com", "+351922222222"),
-            ("João Pereira", "joao@app.com", "+351933333333"),
-            ("Clara Sousa", "clara@app.com", "+351944444444"),
-            ("Rita Gomes", "rita@app.com", "+351955555555"),
+            ("Miguel Costa", "miguel@app.com"),
+            ("Ana Silva", "ana@app.com"),
+            ("João Pereira", "joao@app.com"),
+            ("Clara Sousa", "clara@app.com"),
+            ("Rita Gomes", "rita@app.com"),
         ]
-        for name, email, phone in client_data:
+        for name, email in client_data:
             user = db.query(User).filter(User.email == email).first()
             if not user:
                 user = User(
@@ -56,7 +55,6 @@ def create_data():
                     email=email,
                     hashed_password=get_password_hash("senha123"),
                     role=RoleEnum.client,
-                    phone=phone,
                 )
                 db.add(user)
             clients.append(user)
